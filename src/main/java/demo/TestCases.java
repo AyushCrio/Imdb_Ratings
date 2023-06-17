@@ -1,5 +1,6 @@
 package demo;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.Action;
@@ -12,6 +13,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 //Selenium Imports
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.BrowserType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -43,13 +45,10 @@ public class TestCases {
     
     public  void testCase01(){
         System.out.println("Start Test case: testCase01");
-        driver.navigate().to("https://www.google.com");
+        driver.navigate().to("https://in.bookmyshow.com/explore/home/chennai");
         driver.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
-        driver.findElement(By.xpath("//*[@id=\"APjFqb\"]")).sendKeys("amazon");
-        Actions action = new Actions(driver);
-        action.sendKeys(Keys.ENTER).perform();
-        boolean result = driver.findElement(By.xpath("//h3[text() = \"Amazon.in\" or text() = \"Cloud Computing Services - Amazon Web Services (AWS)\"]")).isDisplayed();
-        System.out.println("Result is displayed ? " + result);
+        List<WebElement> allLinks = driver.findElements(By.xpath("//a[@href]"));
+        System.out.println("Total Number of Links " + allLinks.size());
         System.out.println("end Test case: testCase02");
     }
 
