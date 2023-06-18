@@ -46,30 +46,24 @@ public class TestCases {
     
     public  void testCase01(){
         System.out.println("Start Test case: testCase01");
-        driver.get("https://the-internet.herokuapp.com/nested_frames");
+        driver.get("https://www.imdb.com/chart/top");
         driver.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
+        WebElement sortBy = driver.findElement(By.xpath("//*[@id=\"lister-sort-by-options\"]"));
+        Select dropdown = new Select(sortBy); 
         
-        driver.switchTo().frame("frame-top"); //switched to frame top
-        driver.switchTo().frame("frame-left");
-        String frameLeft = driver.findElement(By.xpath("//*[contains(text(), 'LEFT')]")).getText();
-        
-        driver.switchTo().defaultContent();
-        driver.switchTo().frame("frame-top"); //switched to frame top
-        driver.switchTo().frame("frame-middle");
-        String frameMiddle = driver.findElement(By.xpath("//*[contains(text(), 'MIDDLE')]")).getText();
+        dropdown.selectByVisibleText("Ranking");
+        String highestRatedMovie = driver.findElement(By.xpath("//*[@id=\"main\"]/div/span/div[1]/div/div[3]/table/tbody/tr[1]/td[2]")).getText();
 
-        driver.switchTo().defaultContent();
-        driver.switchTo().frame("frame-top"); //switched to frame top
-        driver.switchTo().frame("frame-right");
-        String frameRight = driver.findElement(By.xpath("//*[contains(text(), 'RIGHT')]")).getText();
+        dropdown.selectByVisibleText("Release Date");
+        String oldestMovie = driver.findElement(By.xpath("//*[@id=\"main\"]/div/span/div[1]/div/div[3]/table/tbody/tr[250]/td[2]")).getText();
+        String newestMovie = driver.findElement(By.xpath("//*[@id=\"main\"]/div/span/div[1]/div/div[3]/table/tbody/tr[1]/td[2]")).getText();
 
-        driver.switchTo().defaultContent();
-        driver.switchTo().frame("frame-bottom"); //switched to frame bottom
-        String frameBottom = driver.findElement(By.xpath("//*[contains(text(), 'BOTTOM')]")).getText();
+        dropdown.selectByVisibleText("Number of Ratings");
+        String userRating = driver.findElement(By.xpath("//*[@id=\"main\"]/div/span/div[1]/div/div[3]/table/tbody/tr[1]/td[2]")).getText();
 
-        driver.switchTo().defaultContent();
+        int totalMovies = driver.findElements(By.xpath("//*[@id=\"main\"]/div/span/div[1]/div/div[3]/table/tbody/tr/td[2]")).size();
 
-        System.out.println("Frame-Left text = " + frameLeft + " Frame-Middle text = " + frameMiddle + " Frame-Right text = " + frameRight + " Frame-BOTTOM text = " + frameBottom);
+        System.out.println("Highest Rated Movie = " + highestRatedMovie + " Oldest Movie = " + oldestMovie + " Newest Movie = " + newestMovie + " Most User Rating = " + userRating + " Total mvies = " + totalMovies);
         System.out.println("end Test case: testCase02");
     }
 
