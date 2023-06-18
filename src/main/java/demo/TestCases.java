@@ -46,16 +46,30 @@ public class TestCases {
     
     public  void testCase01(){
         System.out.println("Start Test case: testCase01");
-        driver.get("https://in.bookmyshow.com/explore/home/chennai");
+        driver.get("https://the-internet.herokuapp.com/nested_frames");
         driver.manage().timeouts().implicitlyWait(6, TimeUnit.SECONDS);
-        List<WebElement> allLinks = driver.findElements(By.xpath("//img[starts-with(@src, 'https://assets-in.bmscdn.com/discovery-catalog/events/')]"));
-        for(int i=0; i<allLinks.size(); i++)
-        {
-            System.out.println("Link:--> " + (allLinks.get(i)).getAttribute("src"));
-        }
-        String movieName = driver.findElement(By.xpath("//*[@id=\"https://in.bookmyshow.com/chennai/movies/por-thozhil/ET00357691-1\"]/div/div[3]/div[1]/div")).getText(); 
-        System.out.println("Movie name" + movieName);
+        
+        driver.switchTo().frame("frame-top"); //switched to frame top
+        driver.switchTo().frame("frame-left");
+        String frameLeft = driver.findElement(By.xpath("//*[contains(text(), 'LEFT')]")).getText();
+        
+        driver.switchTo().defaultContent();
+        driver.switchTo().frame("frame-top"); //switched to frame top
+        driver.switchTo().frame("frame-middle");
+        String frameMiddle = driver.findElement(By.xpath("//*[contains(text(), 'MIDDLE')]")).getText();
 
+        driver.switchTo().defaultContent();
+        driver.switchTo().frame("frame-top"); //switched to frame top
+        driver.switchTo().frame("frame-right");
+        String frameRight = driver.findElement(By.xpath("//*[contains(text(), 'RIGHT')]")).getText();
+
+        driver.switchTo().defaultContent();
+        driver.switchTo().frame("frame-bottom"); //switched to frame bottom
+        String frameBottom = driver.findElement(By.xpath("//*[contains(text(), 'BOTTOM')]")).getText();
+
+        driver.switchTo().defaultContent();
+
+        System.out.println("Frame-Left text = " + frameLeft + " Frame-Middle text = " + frameMiddle + " Frame-Right text = " + frameRight + " Frame-BOTTOM text = " + frameBottom);
         System.out.println("end Test case: testCase02");
     }
 
